@@ -7,18 +7,22 @@ const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
 const navLinks = document.querySelectorAll('.nav-link');
 
-navToggle.addEventListener('click', () => {
-    navToggle.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
+if (navToggle && navMenu) {
+    navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+}
 
 // Close mobile menu when clicking a link
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        navToggle.classList.remove('active');
-        navMenu.classList.remove('active');
+if (navLinks && navLinks.length) {
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (navToggle) navToggle.classList.remove('active');
+            if (navMenu) navMenu.classList.remove('active');
+        });
     });
-});
+}
 
 // Active Navigation Link on Scroll
 window.addEventListener('scroll', () => {
@@ -28,14 +32,14 @@ window.addEventListener('scroll', () => {
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - 200)) {
+        if (window.scrollY >= (sectionTop - 200)) {
             current = section.getAttribute('id');
         }
     });
 
     navLinks.forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === current) {
+        if (link.getAttribute('href') && link.getAttribute('href').slice(1) === current) {
             link.classList.add('active');
         }
     });
@@ -45,6 +49,7 @@ window.addEventListener('scroll', () => {
 const navbar = document.getElementById('navbar');
 
 window.addEventListener('scroll', () => {
+    if (!navbar) return;
     if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
     } else {
@@ -64,19 +69,10 @@ const currentTheme = localStorage.getItem('theme') || 'light';
 html.setAttribute('data-theme', currentTheme);
 
 // Update icon based on theme
-updateThemeIcon(currentTheme);
-
-themeToggle.addEventListener('click', () => {
-    const theme = html.getAttribute('data-theme');
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    
-    html.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateThemeIcon(newTheme);
-});
-
 function updateThemeIcon(theme) {
+    if (!themeToggle) return;
     const icon = themeToggle.querySelector('i');
+    if (!icon) return;
     if (theme === 'dark') {
         icon.classList.remove('fa-moon');
         icon.classList.add('fa-sun');
@@ -86,6 +82,19 @@ function updateThemeIcon(theme) {
     }
 }
 
+updateThemeIcon(currentTheme);
+
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const theme = html.getAttribute('data-theme');
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    });
+}
+
 // ===========================
 // SCROLL TO TOP BUTTON
 // ===========================
@@ -93,6 +102,7 @@ function updateThemeIcon(theme) {
 const scrollTopBtn = document.getElementById('scrollTop');
 
 window.addEventListener('scroll', () => {
+    if (!scrollTopBtn) return;
     if (window.scrollY > 500) {
         scrollTopBtn.classList.add('active');
     } else {
@@ -100,12 +110,14 @@ window.addEventListener('scroll', () => {
     }
 });
 
-scrollTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     });
-});
+}
 
 // ===========================
 // SMOOTH SCROLLING
@@ -113,8 +125,10 @@ scrollTopBtn.addEventListener('click', () => {
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const target = document.querySelector(href);
         
         if (target) {
             const offsetTop = target.offsetTop - 80;
@@ -134,7 +148,7 @@ function animateSkillBars() {
     const skillBars = document.querySelectorAll('.skill-progress');
     
     skillBars.forEach(bar => {
-        const progress = bar.getAttribute('data-progress');
+        const progress = bar.getAttribute('data-progress') || '0';
         const rect = bar.getBoundingClientRect();
         const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
         
@@ -191,25 +205,27 @@ filterButtons.forEach(button => {
 const projectModal = document.getElementById('projectModal');
 const modalBody = document.getElementById('modalBody');
 
-// Project data with detailed information
+// Project data with placeholder information so modal functions work
 const projectsData = {
     project1: {
-        title: "",
-        category: "",
-        location: "",
-        duration: "",
-        budget: "",
-        year: "",
-        description: "
+        title: "Sample Project 1",
+        category: "Commercial",
+        client: "Client A",
+        location: "City A",
+        duration: "6 months",
+        budget: "$10,000",
+        year: "2023",
+        description: "This is a placeholder description for Project 1. Replace with real details later.",
         features: [
-            " "
+            "Feature one",
+            "Feature two",
+            "Feature three"
         ],
         technologies: ["AutoCAD", "Revit", "STAAD Pro", "3D Modeling"],
         images: [
             "assets/images/project1-1.jpg",
             "assets/images/project1-2.jpg",
-            "assets/images/project1-3.jpg",
-            "assets/images/project1-4.jpg"
+            "assets/images/project1-3.jpg"
         ],
         links: {
             demo: "#",
@@ -217,22 +233,19 @@ const projectsData = {
         }
     },
     project2: {
-        title: " ",
-        category: " ",
-        client: " ",
-        location: " ",
-        duration: " ",
-        budget: " ",
-        year: " ",
-        description: " 
-        features: [
-            " "
-        ],
-        technologies: ["", "Revit",],
+        title: "Sample Project 2",
+        category: "Infrastructure",
+        client: "Client B",
+        location: "City B",
+        duration: "4 months",
+        budget: "$8,000",
+        year: "2022",
+        description: "Placeholder description for Project 2.",
+        features: ["Feature A", "Feature B"],
+        technologies: ["Revit", "SketchUp"],
         images: [
             "assets/images/project2-1.jpg",
-            "assets/images/project2-2.jpg",
-            "assets/images/project2-3.jpg"
+            "assets/images/project2-2.jpg"
         ],
         links: {
             demo: "#",
@@ -240,22 +253,19 @@ const projectsData = {
         }
     },
     project3: {
-        title: "",
+        title: "Sample Project 3",
         category: "Residential",
-        client: "",
-        location: "",
-        duration: "",
-        budget: "",
+        client: "Client C",
+        location: "City C",
+        duration: "3 months",
+        budget: "$5,000",
         year: "2022",
-        description: "",
-        features: [
-            " "
-        ],
-        technologies: ["AutoCAD",],
+        description: "Placeholder description for Project 3.",
+        features: ["Design", "3D Modeling"],
+        technologies: ["AutoCAD"],
         images: [
             "assets/images/project3-1.jpg",
-            "assets/images/project3-2.jpg",
-            "assets/images/project3-3.jpg"
+            "assets/images/project3-2.jpg"
         ],
         links: {
             demo: "#",
@@ -263,18 +273,16 @@ const projectsData = {
         }
     },
     project4: {
-        title: " ",
-        category: "",
-        client: "",
-        location: "",
-        duration: "",
-        budget: "",
-        year: "",
-        description: "",
-        features: [
-            " "
-        ],
-        technologies: [",],
+        title: "Sample Project 4",
+        category: "Institutional",
+        client: "Client D",
+        location: "City D",
+        duration: "8 months",
+        budget: "$15,000",
+        year: "2021",
+        description: "Placeholder description for Project 4.",
+        features: ["Feature X", "Feature Y"],
+        technologies: ["Revit", "STAAD Pro"],
         images: [
             "assets/images/project4-1.jpg",
             "assets/images/project4-2.jpg"
@@ -285,22 +293,19 @@ const projectsData = {
         }
     },
     project5: {
-        title: "",
-        category: "l",
-        client: "",
-        location: "",
-        duration: "",
-        budget: "",
-        year: "",
-        description: "",
-        features: [
-            "
-        ],
-        technologies: [, ],
+        title: "Sample Project 5",
+        category: "Landscape",
+        client: "Client E",
+        location: "City E",
+        duration: "2 months",
+        budget: "$3,000",
+        year: "2020",
+        description: "Placeholder description for Project 5.",
+        features: ["Feature 1"],
+        technologies: ["SketchUp"],
         images: [
             "assets/images/project5-1.jpg",
-            "assets/images/project5-2.jpg",
-            "assets/images/project5-3.jpg"
+            "assets/images/project5-2.jpg"
         ],
         links: {
             demo: "#",
@@ -308,21 +313,18 @@ const projectsData = {
         }
     },
     project6: {
-        title: "",
-        category: "",
-        client: "",
-        location: "",
-        duration: "",
-        budget: "",
-        year: "",
-        description: " ",
-        features: [
-            " "
-        ],
-        technologies: ["AutoCAD", ""],
+        title: "Sample Project 6",
+        category: "Renovation",
+        client: "Client F",
+        location: "City F",
+        duration: "5 months",
+        budget: "$7,000",
+        year: "2019",
+        description: "Placeholder description for Project 6.",
+        features: ["Renovation", "Structural Analysis"],
+        technologies: ["AutoCAD"],
         images: [
-            "assets/images/project6-1.jpg",
-            "assets/images/project6-2.jpg"
+            "assets/images/project6-1.jpg"
         ],
         links: {
             demo: "#",
@@ -334,23 +336,23 @@ const projectsData = {
 // Open Project Modal
 function openProjectModal(projectId) {
     const project = projectsData[projectId];
-    
     if (!project) return;
+    if (!projectModal || !modalBody) return;
     
     // Generate image gallery HTML
-    const galleryHTML = project.images.map(img => `
+    const galleryHTML = (project.images || []).map(img => `
         <div class="gallery-image" onclick="openImageLightbox('${img}')">
             <img src="${img}" alt="${project.title}" onerror="this.src='https://via.placeholder.com/400x300/34495e/ffffff?text=Project+Image'">
         </div>
     `).join('');
     
     // Generate features list
-    const featuresHTML = project.features.map(feature => `
+    const featuresHTML = (project.features || []).map(feature => `
         <li><i class="fas fa-check-circle"></i> ${feature}</li>
     `).join('');
     
     // Generate technologies
-    const techHTML = project.technologies.map(tech => `
+    const techHTML = (project.technologies || []).map(tech => `
         <span><i class="fas fa-tools"></i> ${tech}</span>
     `).join('');
     
@@ -427,20 +429,23 @@ function openProjectModal(projectId) {
 
 // Close Project Modal
 function closeProjectModal() {
+    if (!projectModal) return;
     projectModal.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
 
 // Close modal when clicking outside
-projectModal.addEventListener('click', (e) => {
-    if (e.target === projectModal) {
-        closeProjectModal();
-    }
-});
+if (projectModal) {
+    projectModal.addEventListener('click', (e) => {
+        if (e.target === projectModal) {
+            closeProjectModal();
+        }
+    });
+}
 
 // Close modal with Escape key
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && projectModal.classList.contains('active')) {
+    if (e.key === 'Escape' && projectModal && projectModal.classList.contains('active')) {
         closeProjectModal();
     }
 });
@@ -457,7 +462,7 @@ function openImageLightbox(imageSrc) {
             <button class="lightbox-close" onclick="closeLightbox()">
                 <i class="fas fa-times"></i>
             </button>
-            <img src="${imageSrc}" alt="Project Image">
+            <img src="${imageSrc}" alt="Project Image" onerror="this.src='https://via.placeholder.com/800x600/34495e/ffffff?text=Image'">
         </div>
     `;
     
@@ -535,90 +540,97 @@ function closeLightbox() {
 const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
 
-contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    // Clear previous errors
-    clearErrors();
-    
-    // Get form values
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const subject = document.getElementById('subject').value.trim();
-    const message = document.getElementById('message').value.trim();
-    
-    let isValid = true;
-    
-    // Validate name
-    if (name === '') {
-        showError('name', 'Name is required');
-        isValid = false;
-    } else if (name.length < 3) {
-        showError('name', 'Name must be at least 3 characters');
-        isValid = false;
-    }
-    
-    // Validate email
-    if (email === '') {
-        showError('email', 'Email is required');
-        isValid = false;
-    } else if (!isValidEmail(email)) {
-        showError('email', 'Please enter a valid email address');
-        isValid = false;
-    }
-    
-    // Validate phone (optional but check format if provided)
-    if (phone !== '' && !isValidPhone(phone)) {
-        showError('phone', 'Please enter a valid phone number');
-        isValid = false;
-    }
-    
-    // Validate subject
-    if (subject === '') {
-        showError('subject', 'Subject is required');
-        isValid = false;
-    }
-    
-    // Validate message
-    if (message === '') {
-        showError('message', 'Message is required');
-        isValid = false;
-    } else if (message.length < 10) {
-        showError('message', 'Message must be at least 10 characters');
-        isValid = false;
-    }
-    
-    if (isValid) {
-        // Simulate form submission
-        formStatus.textContent = 'Sending message...';
-        formStatus.className = 'form-status';
-        formStatus.style.display = 'block';
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
         
-        // Simulate API call
-        setTimeout(() => {
-            formStatus.textContent = 'Message sent successfully! I will get back to you soon.';
-            formStatus.className = 'form-status success';
-            contactForm.reset();
+        // Clear previous errors
+        clearErrors();
+        
+        // Get form values
+        const name = document.getElementById('name') ? document.getElementById('name').value.trim() : '';
+        const email = document.getElementById('email') ? document.getElementById('email').value.trim() : '';
+        const phone = document.getElementById('phone') ? document.getElementById('phone').value.trim() : '';
+        const subject = document.getElementById('subject') ? document.getElementById('subject').value.trim() : '';
+        const message = document.getElementById('message') ? document.getElementById('message').value.trim() : '';
+        
+        let isValid = true;
+        
+        // Validate name
+        if (name === '') {
+            showError('name', 'Name is required');
+            isValid = false;
+        } else if (name.length < 3) {
+            showError('name', 'Name must be at least 3 characters');
+            isValid = false;
+        }
+        
+        // Validate email
+        if (email === '') {
+            showError('email', 'Email is required');
+            isValid = false;
+        } else if (!isValidEmail(email)) {
+            showError('email', 'Please enter a valid email address');
+            isValid = false;
+        }
+        
+        // Validate phone (optional but check format if provided)
+        if (phone !== '' && !isValidPhone(phone)) {
+            showError('phone', 'Please enter a valid phone number');
+            isValid = false;
+        }
+        
+        // Validate subject
+        if (subject === '') {
+            showError('subject', 'Subject is required');
+            isValid = false;
+        }
+        
+        // Validate message
+        if (message === '') {
+            showError('message', 'Message is required');
+            isValid = false;
+        } else if (message.length < 10) {
+            showError('message', 'Message must be at least 10 characters');
+            isValid = false;
+        }
+        
+        if (isValid) {
+            // Simulate form submission
+            if (formStatus) {
+                formStatus.textContent = 'Sending message...';
+                formStatus.className = 'form-status';
+                formStatus.style.display = 'block';
+            }
             
-            // Hide success message after 5 seconds
+            // Simulate API call
             setTimeout(() => {
-                formStatus.style.display = 'none';
-            }, 5000);
-        }, 2000);
-    }
-});
+                if (formStatus) {
+                    formStatus.textContent = 'Message sent successfully! I will get back to you soon.';
+                    formStatus.className = 'form-status success';
+                }
+                if (contactForm) contactForm.reset();
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    if (formStatus) formStatus.style.display = 'none';
+                }, 5000);
+            }, 2000);
+        }
+    });
+}
 
 function showError(fieldId, message) {
     const field = document.getElementById(fieldId);
-    const errorElement = field.parentElement.querySelector('.error-message');
-    errorElement.textContent = message;
+    if (!field) return;
+    const errorElement = field.parentElement ? field.parentElement.querySelector('.error-message') : null;
+    if (errorElement) errorElement.textContent = message;
     field.style.borderColor = '#e74c3c';
 }
 
 function clearErrors() {
     const errorMessages = document.querySelectorAll('.error-message');
-    const inputs = contactForm.querySelectorAll('input, textarea');
+    const inputs = contactForm ? contactForm.querySelectorAll('input, textarea') : [];
     
     errorMessages.forEach(error => error.textContent = '');
     inputs.forEach(input => input.style.borderColor = '');
@@ -635,14 +647,16 @@ function isValidPhone(phone) {
 }
 
 // Clear error on input
-const formInputs = contactForm.querySelectorAll('input, textarea');
-formInputs.forEach(input => {
-    input.addEventListener('input', () => {
-        const errorElement = input.parentElement.querySelector('.error-message');
-        errorElement.textContent = '';
-        input.style.borderColor = '';
+if (contactForm) {
+    const formInputs = contactForm.querySelectorAll('input, textarea');
+    formInputs.forEach(input => {
+        input.addEventListener('input', () => {
+            const errorElement = input.parentElement ? input.parentElement.querySelector('.error-message') : null;
+            if (errorElement) errorElement.textContent = '';
+            input.style.borderColor = '';
+        });
     });
-});
+}
 
 // ===========================
 // SCROLL REVEAL ANIMATIONS
@@ -673,14 +687,14 @@ if ('IntersectionObserver' in window) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const img = entry.target;
-                img.src = img.dataset.src || img.src;
+                if (img.dataset && img.dataset.src) img.src = img.dataset.src;
                 img.classList.add('loaded');
                 observer.unobserve(img);
             }
         });
     });
     
-    const images = document.querySelectorAll('img');
+    const images = document.querySelectorAll('img[data-src]');
     images.forEach(img => imageObserver.observe(img));
 }
 
@@ -702,13 +716,6 @@ function typeWriter(element, text, speed = 100) {
     
     type();
 }
-
-// You can uncomment this to add typing effect to hero title
-// window.addEventListener('load', () => {
-//     const heroTitle = document.querySelector('.hero-title');
-//     const originalText = heroTitle.textContent;
-//     typeWriter(heroTitle, originalText, 50);
-// });
 
 // ===========================
 // PERFORMANCE OPTIMIZATION
@@ -758,4 +765,3 @@ document.addEventListener('DOMContentLoaded', () => {
     // Smooth page load
     window.scrollTo(0, 0);
 });
-
