@@ -194,23 +194,15 @@ const modalBody = document.getElementById('modalBody');
 // Project data with detailed information
 const projectsData = {
     project1: {
-        title: "Luxury Villa Construction",
-        category: "Residential",
-        client: "Private Client",
-        location: "Your City, Country",
-        duration: "12 Months",
-        budget: "$500,000",
-        year: "2023",
-        description: "A sophisticated 4-bedroom luxury villa featuring contemporary architectural design with sustainable building practices. The project includes modern amenities, energy-efficient systems, and premium finishing throughout. The villa incorporates natural lighting, open floor plans, and seamless indoor-outdoor living spaces.",
+        title: "",
+        category: "",
+        location: "",
+        duration: "",
+        budget: "",
+        year: "",
+        description: "
         features: [
-            "4 spacious bedrooms with en-suite bathrooms",
-            "Open-plan living and dining area",
-            "Modern kitchen with premium appliances",
-            "Private swimming pool and landscaped garden",
-            "Energy-efficient HVAC system",
-            "Smart home automation",
-            "Sustainable construction materials",
-            "Underground parking for 2 vehicles"
+            " "
         ],
         technologies: ["AutoCAD", "Revit", "STAAD Pro", "3D Modeling"],
         images: [
@@ -225,26 +217,18 @@ const projectsData = {
         }
     },
     project2: {
-        title: "Office Complex Development",
-        category: "Commercial",
-        client: "Corporate Client Name",
-        location: "Your City, Country",
-        duration: "18 Months",
-        budget: "$2,000,000",
-        year: "2023",
-        description: "A state-of-the-art 5-story commercial office building designed to accommodate modern workplace needs. The complex features flexible office spaces, conference facilities, retail outlets on the ground floor, and multi-level parking. The design emphasizes natural lighting, ventilation, and energy efficiency.",
+        title: " ",
+        category: " ",
+        client: " ",
+        location: " ",
+        duration: " ",
+        budget: " ",
+        year: " ",
+        description: " 
         features: [
-            "5 floors of flexible office space",
-            "Total built-up area: 50,000 sq ft",
-            "Modern elevator systems",
-            "Multi-level parking facility (100+ vehicles)",
-            "Retail spaces on ground floor",
-            "Conference and meeting rooms",
-            "Green building features (LEED certified)",
-            "Advanced fire safety systems",
-            "High-speed internet infrastructure"
+            " "
         ],
-        technologies: ["ETABS", "Revit", "MS Project", "Primavera P6"],
+        technologies: ["", "Revit",],
         images: [
             "assets/images/project2-1.jpg",
             "assets/images/project2-2.jpg",
@@ -256,26 +240,18 @@ const projectsData = {
         }
     },
     project3: {
-        title: "Apartment Complex",
+        title: "",
         category: "Residential",
-        client: "Real Estate Developer",
-        location: "Your City, Country",
-        duration: "24 Months",
-        budget: "$3,500,000",
+        client: "",
+        location: "",
+        duration: "",
+        budget: "",
         year: "2022",
-        description: "A premium multi-story residential complex featuring 32 well-designed apartments with modern amenities and infrastructure. The project includes recreational facilities, landscaped gardens, and secure parking. Each unit is designed for optimal space utilization and natural ventilation.",
+        description: "",
         features: [
-            "32 residential units (2BHK and 3BHK)",
-            "8-story building with elevator access",
-            "Rooftop recreational area",
-            "Children's play area",
-            "Gymnasium and clubhouse",
-            "24/7 security system",
-            "Rainwater harvesting system",
-            "Solar panels for common area lighting",
-            "Covered parking for residents"
+            " "
         ],
-        technologies: ["AutoCAD", "STAAD Pro", "SAP 2000"],
+        technologies: ["AutoCAD",],
         images: [
             "assets/images/project3-1.jpg",
             "assets/images/project3-2.jpg",
@@ -287,25 +263,18 @@ const projectsData = {
         }
     },
     project4: {
-        title: "Road & Bridge Construction",
-        category: "Infrastructure",
-        client: "Municipal Corporation",
-        location: "Your City, Country",
-        duration: "30 Months",
-        budget: "$5,000,000",
-        year: "2022",
-        description: "Major infrastructure development project including highway expansion and bridge construction. The project involved widening existing roads, constructing a new 4-lane bridge over a river, and implementing modern drainage systems. Special attention was given to traffic management during construction and minimizing environmental impact.",
+        title: " ",
+        category: "",
+        client: "",
+        location: "",
+        duration: "",
+        budget: "",
+        year: "",
+        description: "",
         features: [
-            "15 km highway expansion to 4 lanes",
-            "New bridge construction (300m span)",
-            "Advanced drainage system",
-            "Street lighting with LED fixtures",
-            "Landscaping and green belts",
-            "Pedestrian walkways and cycle tracks",
-            "Traffic signal automation",
-            "Safety barriers and signage"
+            " "
         ],
-        technologies: ["AutoCAD Civil 3D", "Primavera P6", "GPS Survey Equipment"],
+        technologies: [",],
         images: [
             "assets/images/project4-1.jpg",
             "assets/images/project4-2.jpg"
@@ -316,27 +285,18 @@ const projectsData = {
         }
     },
     project5: {
-        title: "Shopping Mall Construction",
-        category: "Commercial",
-        client: "Retail Development Corp",
-        location: "Your City, Country",
-        duration: "36 Months",
-        budget: "$10,000,000",
-        year: "2021",
-        description: "Large-scale retail and entertainment complex spanning 200,000 sq ft. The mall features multiple floors of retail spaces, food courts, cinema complex, and entertainment zones. The design incorporates modern architectural elements with efficient crowd management systems and parking facilities.",
+        title: "",
+        category: "l",
+        client: "",
+        location: "",
+        duration: "",
+        budget: "",
+        year: "",
+        description: "",
         features: [
-            "3 floors of retail space",
-            "100+ retail outlets",
-            "Multiplex cinema (6 screens)",
-            "Food court with 20+ restaurants",
-            "Entertainment zone for families",
-            "Multi-level parking (500+ vehicles)",
-            "Modern HVAC system",
-            "Advanced fire safety and security",
-            "Escalators and elevators",
-            "Sustainable design features"
+            "
         ],
-        technologies: ["Revit", "ETABS", "MS Project", "BIM 360"],
+        technologies: [, ],
         images: [
             "assets/images/project5-1.jpg",
             "assets/images/project5-2.jpg",
@@ -348,26 +308,18 @@ const projectsData = {
         }
     },
     project6: {
-        title: "Water Treatment Plant",
-        category: "Infrastructure",
-        client: "City Water Authority",
-        location: "Your City, Country",
-        duration: "20 Months",
-        budget: "$4,000,000",
-        year: "2021",
-        description: "Municipal water treatment facility designed to process 50 MLD (Million Liters per Day). The plant incorporates modern filtration technologies, quality control systems, and automated monitoring. The project ensures clean water supply to urban population while maintaining environmental standards.",
+        title: "",
+        category: "",
+        client: "",
+        location: "",
+        duration: "",
+        budget: "",
+        year: "",
+        description: " ",
         features: [
-            "Processing capacity: 50 MLD",
-            "Multi-stage filtration system",
-            "Chemical dosing and treatment",
-            "Automated SCADA system",
-            "Quality testing laboratory",
-            "Storage reservoirs (5 ML capacity)",
-            "Backup power systems",
-            "Environmental monitoring",
-            "Staff facilities and control room"
+            " "
         ],
-        technologies: ["AutoCAD", "Civil 3D", "Hydraulic Modeling Software"],
+        technologies: ["AutoCAD", ""],
         images: [
             "assets/images/project6-1.jpg",
             "assets/images/project6-2.jpg"
@@ -806,3 +758,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Smooth page load
     window.scrollTo(0, 0);
 });
+
